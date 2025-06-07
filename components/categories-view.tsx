@@ -96,18 +96,18 @@ export function CategoriesView({
       <div className="flex items-center gap-4">
         <Button variant="ghost" size="sm" onClick={onBack} className="text-blue-600 hover:bg-blue-50">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
+          Zurück
         </Button>
         <div className="flex-1">
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
-            Categories & Day Headers
+          <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+            Kategorien & Tageszuordnungen
           </h1>
-          <p className="text-sm text-muted-foreground">Create categories and assign them to weekdays</p>
+          <p className="text-sm text-muted-foreground">Kategorien erstellen und Wochentagen zuweisen</p>
         </div>
         {hasChanges && (
           <Button onClick={handleSave} className="bg-green-600 hover:bg-green-700">
             <Save className="w-4 h-4 mr-2" />
-            Save Changes
+            Änderungen speichern
           </Button>
         )}
       </div>
@@ -117,22 +117,22 @@ export function CategoriesView({
         <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50">
           <CardTitle className="flex items-center gap-2 text-green-800">
             <Plus className="w-5 h-5" />
-            Add New Category
+            Neue Kategorie hinzufügen
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           <div className="space-y-4">
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <div className="flex-1">
                 <Label htmlFor="newCategory" className="text-gray-700 font-medium">
-                  Category Name
+                  Kategoriename
                 </Label>
                 <Input
                   id="newCategory"
                   value={newCategory}
                   onChange={(e) => setNewCategory(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="e.g., Jazz, Classical, Technique"
+                  placeholder="z.B. Jazz, Klassik, Technik"
                   className="border-green-200 focus:border-green-400"
                 />
               </div>
@@ -140,9 +140,9 @@ export function CategoriesView({
                 <Button
                   onClick={handleAddCategory}
                   disabled={!newCategory.trim() || categories.includes(newCategory.trim())}
-                  className="bg-green-600 hover:bg-green-700"
+                  className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
                 >
-                  Add
+                  Hinzufügen
                 </Button>
               </div>
             </div>
@@ -150,8 +150,8 @@ export function CategoriesView({
             {/* Quick Add Suggestions */}
             {availableSuggestions.length > 0 && (
               <div className="space-y-2">
-                <Label className="text-sm text-gray-600">Quick add suggestions:</Label>
-                <div className="flex flex-wrap gap-2">
+                <Label className="text-sm text-gray-600">Schnell hinzufügen:</Label>
+                <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2">
                   {availableSuggestions.slice(0, 8).map((suggestion) => (
                     <Button
                       key={suggestion}
@@ -176,13 +176,13 @@ export function CategoriesView({
         <CardHeader className="bg-gradient-to-r from-blue-50 to-indigo-50">
           <CardTitle className="flex items-center gap-2 text-blue-800">
             <Tag className="w-5 h-5" />
-            Your Categories ({categories.length})
+            Ihre Kategorien ({categories.length})
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           {categories.length === 0 ? (
             <p className="text-center text-muted-foreground py-8">
-              No categories yet. Add some categories to organize your exercises!
+              Noch keine Kategorien. Fügen Sie Kategorien hinzu, um Ihre Übungen zu organisieren!
             </p>
           ) : (
             <div className="space-y-3">
@@ -214,14 +214,17 @@ export function CategoriesView({
         <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50">
           <CardTitle className="flex items-center gap-2 text-purple-800">
             <Calendar className="w-5 h-5" />
-            Assign Categories to Days
+            Kategorien zu Tagen zuweisen
           </CardTitle>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-4 sm:p-6">
           <div className="space-y-4">
             {DAYS.map((day) => (
-              <div key={day} className="flex items-center gap-4 p-3 bg-purple-50 rounded-lg border border-purple-200">
-                <div className="w-20 font-medium text-purple-800">{day}</div>
+              <div
+                key={day}
+                className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 p-3 bg-purple-50 rounded-lg border border-purple-200"
+              >
+                <div className="w-full sm:w-20 font-medium text-purple-800">{day}</div>
                 <div className="flex-1">
                   {categories.length > 0 ? (
                     <Select
@@ -229,10 +232,10 @@ export function CategoriesView({
                       onValueChange={(value) => handleHeaderChange(day, value)}
                     >
                       <SelectTrigger className="border-purple-200 focus:border-purple-400">
-                        <SelectValue placeholder="Select category" />
+                        <SelectValue placeholder="Kategorie auswählen" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="No category">No category</SelectItem>
+                        <SelectItem value="No category">Keine Kategorie</SelectItem>
                         {categories.map((category) => (
                           <SelectItem key={category} value={category}>
                             {category}
@@ -242,7 +245,7 @@ export function CategoriesView({
                     </Select>
                   ) : (
                     <p className="text-sm text-orange-600 p-2 bg-orange-50 rounded border border-orange-200">
-                      Create categories first
+                      Erstellen Sie zuerst Kategorien
                     </p>
                   )}
                 </div>
@@ -251,9 +254,9 @@ export function CategoriesView({
                     variant="outline"
                     size="sm"
                     onClick={() => clearHeader(day)}
-                    className="border-red-300 text-red-600 hover:bg-red-50"
+                    className="border-red-300 text-red-600 hover:bg-red-50 w-full sm:w-auto"
                   >
-                    Clear
+                    Löschen
                   </Button>
                 )}
               </div>
@@ -262,15 +265,30 @@ export function CategoriesView({
         </CardContent>
       </Card>
 
+      {/* Save Changes reminder for mobile */}
+      {hasChanges && (
+        <Card className="border-2 border-green-200 bg-gradient-to-r from-green-50 to-emerald-50">
+          <CardContent className="p-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <p className="text-green-700 font-medium">Sie haben ungespeicherte Änderungen</p>
+              <Button onClick={handleSave} className="bg-green-600 hover:bg-green-700 w-full sm:w-auto">
+                <Save className="w-4 h-4 mr-2" />
+                Alle Änderungen speichern
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
       {/* Instructions */}
       <Card className="border-gray-200 bg-gray-50">
         <CardContent className="p-4">
-          <h3 className="font-semibold text-gray-800 mb-2">💡 How It Works</h3>
+          <h3 className="font-semibold text-gray-800 mb-2">💡 So funktioniert es</h3>
           <ul className="text-sm text-gray-600 space-y-1">
-            <li>• Create categories for different types of practice (Chords, Scales, Jazz, etc.)</li>
-            <li>• Assign categories to weekdays - exercises in that category will appear on those days</li>
-            <li>• When adding exercises, select from your categories</li>
-            <li>• Each day you can log what you actually practiced with specific details</li>
+            <li>• Erstellen Sie Kategorien für verschiedene Übungsarten (Akkorde, Tonleitern, Jazz usw.)</li>
+            <li>• Weisen Sie Kategorien zu Wochentagen zu - Übungen in dieser Kategorie erscheinen an diesen Tagen</li>
+            <li>• Beim Hinzufügen von Übungen wählen Sie aus Ihren Kategorien</li>
+            <li>• Jeden Tag können Sie protokollieren, was Sie tatsächlich mit spezifischen Details geübt haben</li>
           </ul>
         </CardContent>
       </Card>
