@@ -391,41 +391,39 @@ export default function MusicianTrainingApp() {
 
     return (
       <div className="space-y-6">
-        {/* Phase Selection - Mobile optimized */}
+        {/* Phase Selection */}
         <Card className="border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
           <CardContent className="p-4">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center justify-between">
               <div>
                 <h3 className="font-semibold text-blue-900">Aktuelle Phase</h3>
                 <p className="text-sm text-blue-700">Phase {currentPhase}</p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex gap-2">
                 {availablePhases.length <= 3 ? (
-                  // Show buttons for 3 or fewer phases - stack on mobile
-                  <div className="grid grid-cols-2 sm:flex gap-2">
-                    {availablePhases.map((phase) => (
-                      <Button
-                        key={phase}
-                        variant={phase === currentPhase ? "default" : "outline"}
-                        size="sm"
-                        onClick={() => changePhase(phase)}
-                        className={
-                          phase === currentPhase
-                            ? "bg-blue-600 hover:bg-blue-700"
-                            : "border-blue-300 text-blue-600 hover:bg-blue-50"
-                        }
-                      >
-                        Phase {phase}
-                      </Button>
-                    ))}
-                  </div>
+                  // Show buttons for 3 or fewer phases
+                  availablePhases.map((phase) => (
+                    <Button
+                      key={phase}
+                      variant={phase === currentPhase ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => changePhase(phase)}
+                      className={
+                        phase === currentPhase
+                          ? "bg-blue-600 hover:bg-blue-700"
+                          : "border-blue-300 text-blue-600 hover:bg-blue-50"
+                      }
+                    >
+                      Phase {phase}
+                    </Button>
+                  ))
                 ) : (
                   // Show dropdown for more than 3 phases
                   <Select
                     value={currentPhase.toString()}
                     onValueChange={(value) => changePhase(Number.parseInt(value))}
                   >
-                    <SelectTrigger className="w-full sm:w-32 border-blue-300 focus:border-blue-400">
+                    <SelectTrigger className="w-32 border-blue-300 focus:border-blue-400">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
@@ -442,7 +440,7 @@ export default function MusicianTrainingApp() {
           </CardContent>
         </Card>
 
-        {/* Date Navigation - Mobile optimized */}
+        {/* Date Navigation */}
         <Card className="border-purple-200">
           <CardHeader className="bg-gradient-to-r from-purple-50 to-pink-50">
             <div className="flex items-center justify-between">
@@ -450,36 +448,32 @@ export default function MusicianTrainingApp() {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigateDate("prev")}
-                className="text-purple-600 hover:bg-purple-100 px-2 sm:px-4"
+                className="text-purple-600 hover:bg-purple-100"
               >
                 ←
               </Button>
-              <div className="text-center flex-1 px-2">
-                <CardTitle className="text-purple-800 flex flex-col sm:flex-row items-center justify-center gap-2 text-sm sm:text-base">
-                  <span className="text-center">
-                    {new Date(selectedDate + "T00:00:00").toLocaleDateString("de-DE", {
-                      weekday: "long",
-                      day: "numeric",
-                      month: "long",
-                    })}
-                  </span>
+              <div className="text-center">
+                <CardTitle className="text-purple-800 flex items-center gap-2">
+                  {new Date(selectedDate + "T00:00:00").toLocaleDateString("de-DE", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                  })}
                   {isToday && <Badge className="bg-green-100 text-green-800 text-xs">Heute</Badge>}
                 </CardTitle>
-                {selectedDayCategory && (
-                  <p className="text-sm text-purple-600 font-medium mt-1">{selectedDayCategory}</p>
-                )}
+                {selectedDayCategory && <p className="text-sm text-purple-600 font-medium">{selectedDayCategory}</p>}
               </div>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigateDate("next")}
-                className="text-purple-600 hover:bg-purple-100 px-2 sm:px-4"
+                className="text-purple-600 hover:bg-purple-100"
               >
                 →
               </Button>
             </div>
           </CardHeader>
-          <CardContent className="space-y-4 p-4 sm:p-6">
+          <CardContent className="space-y-4 p-6">
             {selectedDayExercises.length === 0 ? (
               <div className="text-center py-8">
                 {!selectedDayCategory ? (
@@ -489,7 +483,7 @@ export default function MusicianTrainingApp() {
                     <p className="text-sm text-orange-600 mb-4">
                       💡 Weisen Sie {selectedDayOfWeek} eine Kategorie zu, um hier Übungen zu sehen!
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                    <div className="flex gap-2 justify-center">
                       <Button onClick={() => setCurrentView("categories")} className="bg-blue-600 hover:bg-blue-700">
                         Kategorien einrichten
                       </Button>
@@ -529,9 +523,9 @@ export default function MusicianTrainingApp() {
                     }`}
                   >
                     <CardContent className="p-4">
-                      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                      <div className="flex items-start justify-between">
                         <div className="space-y-2 flex-1">
-                          <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                          <div className="flex items-center gap-2">
                             <h3
                               className={`font-semibold ${
                                 todayLog?.completed ? "line-through text-green-600" : "text-gray-900"
@@ -540,23 +534,21 @@ export default function MusicianTrainingApp() {
                               {exercise.name}
                             </h3>
                             {todayLog?.completed && (
-                              <Badge className="bg-green-100 text-green-800 border-green-300 self-start">
-                                Abgeschlossen
-                              </Badge>
+                              <Badge className="bg-green-100 text-green-800 border-green-300">Abgeschlossen</Badge>
                             )}
                           </div>
 
-                          {/* Show last practice data or today's data - Mobile optimized */}
+                          {/* Show last practice data or today's data */}
                           {(todayLog || lastPractice) && (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 text-sm text-muted-foreground">
+                            <div className="grid grid-cols-2 gap-4 text-sm text-muted-foreground">
                               {/* Scale information for scale exercises */}
                               {(exercise.has_scale_selector ||
                                 exercise.category.toLowerCase().includes("tonleiter") ||
                                 exercise.name.toLowerCase().includes("tonleiter")) &&
                                 ((todayLog?.scale_keys && todayLog.scale_keys.length > 0) ||
                                   (lastPractice?.scale_keys && lastPractice.scale_keys.length > 0)) && (
-                                  <div className="flex items-start gap-1 col-span-1 sm:col-span-2">
-                                    <Music className="w-4 h-4 text-purple-500 mt-0.5 flex-shrink-0" />
+                                  <div className="flex items-center gap-1 col-span-2">
+                                    <Music className="w-4 h-4 text-purple-500" />
                                     <div className="flex flex-wrap gap-1">
                                       {(todayLog?.scale_keys || lastPractice?.scale_keys || []).map((key, index) => {
                                         const mode = (todayLog?.scale_modes || lastPractice?.scale_modes || [])[index]
@@ -580,30 +572,26 @@ export default function MusicianTrainingApp() {
 
                               {(todayLog?.song || lastPractice?.song) && (
                                 <div className="flex items-center gap-1">
-                                  <Music className="w-4 h-4 text-purple-500 flex-shrink-0" />
-                                  <span className="truncate">
-                                    {todayLog?.song || lastPractice?.song}
-                                    {!todayLog && lastPractice && (
-                                      <span className="text-xs text-gray-400 ml-1">(letztes Mal)</span>
-                                    )}
-                                  </span>
+                                  <Music className="w-4 h-4 text-purple-500" />
+                                  {todayLog?.song || lastPractice?.song}
+                                  {!todayLog && lastPractice && (
+                                    <span className="text-xs text-gray-400">(letztes Mal)</span>
+                                  )}
                                 </div>
                               )}
                               {(todayLog?.bpm || lastPractice?.bpm) && (
                                 <div className="flex items-center gap-1">
-                                  <Clock className="w-4 h-4 text-blue-500 flex-shrink-0" />
-                                  <span>
-                                    {todayLog?.bpm || lastPractice?.bpm} BPM
-                                    {!todayLog && lastPractice && (
-                                      <span className="text-xs text-gray-400 ml-1">(letztes Mal)</span>
-                                    )}
-                                  </span>
+                                  <Clock className="w-4 h-4 text-blue-500" />
+                                  {todayLog?.bpm || lastPractice?.bpm} BPM
+                                  {!todayLog && lastPractice && (
+                                    <span className="text-xs text-gray-400">(letztes Mal)</span>
+                                  )}
                                 </div>
                               )}
                               {(todayLog?.book || lastPractice?.book) && (
                                 <div className="flex items-center gap-1">
-                                  <BookOpen className="w-4 h-4 text-orange-500 flex-shrink-0" />
-                                  <span className="truncate">{todayLog?.book || lastPractice?.book}</span>
+                                  <BookOpen className="w-4 h-4 text-orange-500" />
+                                  {todayLog?.book || lastPractice?.book}
                                 </div>
                               )}
                               {(todayLog?.page || lastPractice?.page) && (
@@ -615,7 +603,7 @@ export default function MusicianTrainingApp() {
                           )}
                         </div>
 
-                        <div className="flex justify-end sm:justify-start">
+                        <div className="flex gap-2">
                           <Button
                             variant="outline"
                             size="sm"
@@ -624,7 +612,7 @@ export default function MusicianTrainingApp() {
                               setCurrentView("practice-session")
                               // You'll need to pass the exercise and date to the practice session
                             }}
-                            className="border-blue-300 text-blue-600 hover:bg-blue-50 w-full sm:w-auto"
+                            className="border-blue-300 text-blue-600 hover:bg-blue-50"
                           >
                             Üben
                           </Button>
@@ -638,8 +626,7 @@ export default function MusicianTrainingApp() {
           </CardContent>
         </Card>
 
-        {/* Action buttons - Mobile optimized: stack vertically on mobile, side by side on larger screens */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-4">
           <Button
             onClick={() => setCurrentView("weekly")}
             variant="outline"
@@ -664,13 +651,13 @@ export default function MusicianTrainingApp() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <OfflineIndicator />
-      <div className="container mx-auto p-3 sm:p-4 max-w-2xl">
-        {/* Navigation - Mobile optimized */}
+      <div className="container mx-auto p-4 max-w-2xl">
+        {/* Navigation */}
         {showBackupReminder && (
           <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-2xl px-4">
             <Card className="border-purple-200 bg-gradient-to-r from-purple-50 to-pink-50 shadow-lg">
               <CardContent className="p-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div className="flex items-center justify-between">
                   <div>
                     <h3 className="font-semibold text-purple-800">📱 Sichern Sie Ihre Daten</h3>
                     <p className="text-sm text-purple-700">
@@ -679,7 +666,7 @@ export default function MusicianTrainingApp() {
                         : "Vergessen Sie nicht, Ihre Übungsprotokolle zu sichern! Exportieren Sie Ihre Daten, um sie zu sichern."}
                     </p>
                   </div>
-                  <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="flex gap-2">
                     <Button size="sm" onClick={exportData} className="bg-purple-600 hover:bg-purple-700 text-white">
                       📤 Exportieren
                     </Button>
@@ -687,7 +674,7 @@ export default function MusicianTrainingApp() {
                       <Button
                         size="sm"
                         variant="outline"
-                        className="border-purple-300 text-purple-600 hover:bg-purple-50 cursor-pointer w-full sm:w-auto"
+                        className="border-purple-300 text-purple-600 hover:bg-purple-50 cursor-pointer"
                         asChild
                       >
                         <span>📥 Importieren</span>
@@ -709,13 +696,12 @@ export default function MusicianTrainingApp() {
           </div>
         )}
 
-        {/* Navigation Bar - Mobile optimized */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-white rounded-lg p-4 shadow-sm border border-gray-200 mb-6 gap-4">
-          <div className="flex flex-wrap gap-1 sm:gap-2">
+        <div className="flex items-center justify-between bg-white rounded-lg p-4 shadow-sm border border-gray-200 mb-6">
+          <div className="flex gap-2">
             <Button
               variant="ghost"
               onClick={() => setCurrentView("dashboard")}
-              className={`text-xs sm:text-sm px-2 sm:px-3 ${
+              className={`${
                 currentView === "dashboard" ? "bg-blue-100 text-blue-700" : "text-gray-600 hover:text-blue-600"
               }`}
             >
@@ -724,7 +710,7 @@ export default function MusicianTrainingApp() {
             <Button
               variant="ghost"
               onClick={() => setCurrentView("categories")}
-              className={`text-xs sm:text-sm px-2 sm:px-3 ${
+              className={`${
                 currentView === "categories" ? "bg-blue-100 text-blue-700" : "text-gray-600 hover:text-blue-600"
               }`}
             >
@@ -733,7 +719,7 @@ export default function MusicianTrainingApp() {
             <Button
               variant="ghost"
               onClick={() => setCurrentView("phases")}
-              className={`text-xs sm:text-sm px-2 sm:px-3 ${
+              className={`${
                 currentView === "phases" ? "bg-blue-100 text-blue-700" : "text-gray-600 hover:text-blue-600"
               }`}
             >
@@ -742,7 +728,7 @@ export default function MusicianTrainingApp() {
             <Button
               variant="ghost"
               onClick={() => setCurrentView("backup")}
-              className={`text-xs sm:text-sm px-2 sm:px-3 ${
+              className={`${
                 currentView === "backup" ? "bg-blue-100 text-blue-700" : "text-gray-600 hover:text-blue-600"
               }`}
             >
@@ -753,7 +739,7 @@ export default function MusicianTrainingApp() {
           <Button
             onClick={() => setCurrentView("add-exercise")}
             size="sm"
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 w-full sm:w-auto"
+            className="ml-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
           >
             <Plus className="w-4 h-4 mr-2" />
             Übung hinzufügen
@@ -869,7 +855,7 @@ const BackupExport: React.FC<{
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h1 className="text-2xl sm:text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+        <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Backup & Wiederherstellung
         </h1>
         <p className="text-muted-foreground">Verwalten Sie Ihre Übungsdaten-Backups.</p>
@@ -887,7 +873,7 @@ const BackupExport: React.FC<{
                 • {exercises.length} Übungsvorlagen • {practiceLogs.length} Übungsprotokolle • {categories.length}{" "}
                 Kategorien • {availablePhases.length} Phasen
               </div>
-              <Button onClick={onExport} className="bg-purple-600 hover:bg-purple-700 text-white mt-2 w-full sm:w-auto">
+              <Button onClick={onExport} className="bg-purple-600 hover:bg-purple-700 text-white mt-2">
                 📤 Daten exportieren
               </Button>
             </div>
@@ -901,7 +887,7 @@ const BackupExport: React.FC<{
               <label>
                 <Button
                   variant="outline"
-                  className="border-purple-300 text-purple-600 hover:bg-purple-50 cursor-pointer mt-2 w-full sm:w-auto"
+                  className="border-purple-300 text-purple-600 hover:bg-purple-50 cursor-pointer mt-2"
                   asChild
                 >
                   <span>📥 Daten importieren</span>
@@ -923,7 +909,7 @@ const BackupExport: React.FC<{
         </CardContent>
       </Card>
 
-      <Button onClick={onBack} variant="outline" className="border-gray-300 text-gray-600 w-full sm:w-auto">
+      <Button onClick={onBack} variant="outline" className="border-gray-300 text-gray-600">
         ← Zurück zum Dashboard
       </Button>
     </div>

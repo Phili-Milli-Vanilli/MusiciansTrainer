@@ -176,7 +176,7 @@ export function PracticeSession({
           Zurück
         </Button>
         <div className="flex-1">
-          <h1 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">
             Übungssitzung
           </h1>
           <p className="text-sm text-muted-foreground">
@@ -192,18 +192,18 @@ export function PracticeSession({
         </Badge>
       </div>
 
-      {/* Exercise Navigation - Mobile optimized */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      {/* Exercise Navigation */}
+      <div className="flex items-center justify-between">
         <Button
           variant="outline"
           onClick={prevExercise}
           disabled={currentExerciseIndex === 0}
-          className="border-blue-300 text-blue-600 order-2 sm:order-1"
+          className="border-blue-300 text-blue-600"
         >
           ← Vorherige
         </Button>
-        <div className="text-center order-1 sm:order-2">
-          <h2 className="text-lg sm:text-xl font-semibold text-gray-800">{currentExercise.name}</h2>
+        <div className="text-center">
+          <h2 className="text-xl font-semibold text-gray-800">{currentExercise.name}</h2>
           <p className="text-sm text-muted-foreground">
             {currentExercise.category} • Phase {currentExercise.phase}
           </p>
@@ -212,7 +212,7 @@ export function PracticeSession({
           variant="outline"
           onClick={nextExercise}
           disabled={currentExerciseIndex === exercises.length - 1}
-          className="border-blue-300 text-blue-600 order-3"
+          className="border-blue-300 text-blue-600"
         >
           Nächste →
         </Button>
@@ -234,7 +234,7 @@ export function PracticeSession({
         />
       )}
 
-      {/* Practice Form - Mobile optimized */}
+      {/* Practice Form */}
       <Card className="border-2 border-green-200">
         <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50">
           <CardTitle className="text-green-800">Übungsdetails</CardTitle>
@@ -244,8 +244,8 @@ export function PracticeSession({
             </p>
           )}
         </CardHeader>
-        <CardContent className="p-4 sm:p-6 space-y-4">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <CardContent className="p-6 space-y-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="song" className="text-gray-700 font-medium flex items-center gap-2">
                 <Music className="w-4 h-4 text-purple-500" />
@@ -277,7 +277,7 @@ export function PracticeSession({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="book" className="text-gray-700 font-medium flex items-center gap-2">
                 <BookOpen className="w-4 h-4 text-orange-500" />
@@ -351,8 +351,8 @@ export function PracticeSession({
         </CardContent>
       </Card>
 
-      {/* Action Buttons - Mobile optimized */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      {/* Action Buttons */}
+      <div className="flex gap-4">
         <Button
           onClick={saveCurrent}
           variant="outline"
