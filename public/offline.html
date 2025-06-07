@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Musiker Training App</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      color: #333;
+    }
+    
+    .container {
+      max-width: 500px;
+      padding: 40px 30px;
+      background-color: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      animation: fadeIn 0.5s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .icon {
+      font-size: 64px;
+      margin-bottom: 24px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    h1 {
+      margin-bottom: 16px;
+      color: #6366f1;
+      font-size: 28px;
+      font-weight: 700;
+    }
+    
+    p {
+      line-height: 1.6;
+      margin-bottom: 24px;
+      color: #6b7280;
+      font-size: 16px;
+    }
+    
+    .features {
+      background-color: #f8fafc;
+      padding: 20px;
+      border-radius: 12px;
+      margin: 24px 0;
+      text-align: left;
+    }
+    
+    .features h3 {
+      color: #374151;
+      margin-bottom: 12px;
+      font-size: 18px;
+    }
+    
+    .features ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .features li {
+      padding: 8px 0;
+      color: #6b7280;
+      position: relative;
+      padding-left: 24px;
+    }
+    
+    .features li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #10b981;
+      font-weight: bold;
+    }
+    
+    button {
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      color: white;
+      border: none;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    .status {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .status.offline {
+      background-color: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fbbf24;
+    }
+    
+    .status.online {
+      background-color: #d1fae5;
+      color: #065f46;
+      border: 1px solid #10b981;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">🎵</div>
+    <h1>Du bist offline</h1>
+    <p>Keine Internetverbindung erkannt. Aber keine Sorge - deine Musiker-Training-App funktioniert auch offline!</p>
+    
+    <div class="features">
+      <h3>Verfügbare Offline-Funktionen:</h3>
+      <ul>
+        <li>Alle deine gespeicherten Übungen anzeigen</li>
+        <li>Neue Übungssitzungen protokollieren</li>
+        <li>Fortschritt und Statistiken einsehen</li>
+        <li>Kategorien und Phasen verwalten</li>
+        <li>Daten exportieren und importieren</li>
+      </ul>
+    </div>
+    
+    <div id="connection-status" class="status offline">
+      📶 Offline - Eingeschränkte Funktionalität
+    </div>
+    
+    <button onclick="checkConnection()">Verbindung prüfen</button>
+  </div>
+
+  <script>
+    function checkConnection() {
+      if (navigator.onLine) {
+        window.location.reload();
+      } else {
+        updateStatus(false);
+      }
+    }
+    
+    function updateStatus(isOnline) {
+      const status = document.getElementById('connection-status');
+      if (isOnline) {
+        status.textContent = '✅ Online - Alle Funktionen verfügbar';
+        status.className = 'status online';
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } else {
+        status.textContent = '📶 Offline - Eingeschränkte Funktionalität';
+        status.className = 'status offline';
+      }
+    }
+    
+    // Überwache Verbindungsstatus
+    window.addEventListener('online', () => updateStatus(true));
+    window.addEventListener('offline', () => updateStatus(false));
+    
+    // Initiale Statusprüfung
+    updateStatus(navigator.onLine);
+    
+    // Automatische Wiederverbindungsversuche
+    setInterval(() => {
+      if (navigator.onLine) {
+        updateStatus(true);
+      }
+    }, 5000);
+  </script>
+</body>
+</html>
